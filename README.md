@@ -1,5 +1,5 @@
 
-# Using a public Ubuntu ec2 on AWS this is an Ansible demo that demonstrates some important Ansible Scripting consepts like:
+# Using a public Ubuntu ec2 on AWS this is an Ansible demo that demonstrates some important Ansible Scripting concepts like:
 ```bash
 1- Inventory
 2- Playbook
