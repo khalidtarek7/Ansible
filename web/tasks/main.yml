@@ -1,0 +1,38 @@
+- name: apt update #module1
+  apt:
+    upgrade: yes
+  # when: update=="yes" #this is a condition if update = yes then update but here the value is not so it wont update
+  when: ansible_facts["os_family"]=="Centos" and update=="yes" #checking if the facts gathered of the os are from the family debian
+
+- name: install nginx #module2
+  apt:
+    name: nginx
+    state: present
+
+- name: create dir #module3
+  file:
+    path: "{{ dir_name }}"
+    state: directory   
+
+- name: #module4
+  command: "ls {{ dir_name }}"
+  register: results #storing the output of the previous step in a variable called results
+
+- name: print stdout #module5 to print results
+  debug:
+    var: results.stdout #to print the output only
+
+- name: copy template #module4 to copy the variavle in myconfig with the value mentioned here to the server
+  template: #could be copy not template
+    src: myconfig.g2 #path of the source file on my machine #if i want to copy from path to path but in the server use remote src = true instead of src
+    dest: myconfig.g2 #path of the destination file
+  notify: restart nginx #to link wi the handler
+
+- name: create user x
+  user: #creating users on the server with loop
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - khalid
+    - fares
+    - nany
